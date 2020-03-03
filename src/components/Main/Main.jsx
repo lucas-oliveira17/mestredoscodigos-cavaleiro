@@ -10,7 +10,7 @@ class Main extends React.Component {
     }
 
     componentDidMount() {
-        const heroesQuantity = 24;
+        const heroesQuantity = 16;
 
         this.getHeroes(heroesQuantity)
     }
@@ -26,7 +26,8 @@ class Main extends React.Component {
             return (
                 <ul className="heroes" >{this.state.heroes.map(hero => 
                     <li className="hero" key={hero.id}>
-                        <div className="hero__image" alt="" style={ { background: `url(${hero.thumbnail.path}.${hero.thumbnail.extension}) no-repeat center center / cover` } }>
+                        <div className="hero__image" alt="" style={ { background: `url(${hero.thumbnail.path}.${hero.thumbnail.extension})
+                            no-repeat center center / cover` } }>
                             <span className="hero__name" >{hero.name}</span>
                         </div>
                     </li>)}
