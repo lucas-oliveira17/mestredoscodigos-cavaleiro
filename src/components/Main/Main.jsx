@@ -1,39 +1,39 @@
 import React from 'react'
+import Hero from '../Hero/Hero'
 import getHeroes from '../../services/hero'
-import { hasError } from '../../utils/error'
+import { hasError, raffleArray, duplicateArray } from '../../utils/utils'
 import './Main.css'
 
 class Main extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = { heroes: [] }
     }
 
-    componentDidMount() {
-        const heroesQuantity = 16;
+    componentDidMount () {
+        const heroesQuantity = 16
 
-        this.getHeroes(heroesQuantity)
+        this.setHeroesToGame(heroesQuantity)
+            .then(heroesRet => this.setState({ heroes: heroesRet }))
     }
 
-    async getHeroes(heroesQuantity) {
-        const heroesReturned = await getHeroes(heroesQuantity);
+    async setHeroesToGame (heroesQuantity) {
+        const heroesReturned = await getHeroes(heroesQuantity)
 
-        this.setState({ heroes: heroesReturned.concat(heroesReturned).sort(() => Math.random() - 0.5) })
+        const duplicatedHeroesArray = duplicateArray(heroesReturned)
+
+        const raffledHeroesArray = raffleArray(duplicatedHeroesArray)
+
+        return raffledHeroesArray
     }
 
     render() {
         if (!hasError(this.state.heroes)) {
             return (
                 <ul className="heroes" >{this.state.heroes.map(hero => 
-                    <li className="hero" key={hero.id}>
-                        <div className="hero__image" alt="" style={ { background: `url(${hero.thumbnail.path}.${hero.thumbnail.extension})
-                            no-repeat center center / cover` } }>
-                            <span className="hero__name" >{hero.name}</span>
-                        </div>
-                    </li>)}
+                    <Hero info={hero} />)}
                 </ul>
             )
-
         } else {
             return (
                 <div className="error">
