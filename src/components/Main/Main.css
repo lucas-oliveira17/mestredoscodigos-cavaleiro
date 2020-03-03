@@ -1,0 +1,49 @@
+body {
+    background-color: #181818
+}
+
+li {
+    list-style-type: none;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+.heroes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.hero {
+    margin: 5px;
+    cursor: pointer;
+}
+
+.hero__image {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.hero:hover .hero__image {
+    opacity: .8;
+}
+
+.hero__name {
+    z-index: 1;
+    font-weight: bold;
+    color: white;
+    left: 0;
+    bottom: 0;
+    background-color: rgb(14, 14, 14);
+    width: 100%
+}
+
+.error_message {
+    color: white;
+}
