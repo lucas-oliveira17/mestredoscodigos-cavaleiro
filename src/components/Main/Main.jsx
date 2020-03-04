@@ -1,6 +1,6 @@
 import React from 'react'
 import getHeroes from '../../services/hero'
-import RenderList  from '../RenderList/RenderList'
+import RenderContent  from '../RenderContent/RenderContent'
 import RenderError from '../RenderError/RenderError'
 import { hasError } from '../../utils/utils'
 import './Main.css'
@@ -22,6 +22,6 @@ class Main extends React.Component {
         return !hasError(ret) ? ret.duplicate().raffle() : ret;
     }
 
-    render = () => !hasError(this.state.apiRet) ? <RenderList heroes={this.state.apiRet} className={'heroes'} /> : <RenderError message={this.state.apiRet} />
+    render = () => !hasError(this.state.apiRet) ? <RenderContent heroes={this.state.apiRet} className={'heroes'} /> : <RenderError message={this.state.apiRet} />
 }
 export default Main
