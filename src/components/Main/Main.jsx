@@ -12,11 +12,12 @@ class Main extends React.Component {
     }
 
     componentDidMount () {
-        this.setHeroesToGame().then(ret => this.setState({ apiRet: ret }))
+        this.setHeroesToGame().then(ret => 
+            this.setState({ apiRet: ret }))
     }
 
-    async setHeroesToGame (heroesQuantity) {
-        let ret = await getHeroes(heroesQuantity)
+    async setHeroesToGame () {
+        let ret = await getHeroes()
         
         return !hasError(ret) ? ret.duplicate().raffle() : ret;
     }
