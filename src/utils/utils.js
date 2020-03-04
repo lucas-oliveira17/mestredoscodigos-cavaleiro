@@ -1,7 +1,13 @@
 const hasError = param => param instanceof Error
 
-const duplicateArray = array => array.concat(array)
+// eslint-disable-next-line
+Array.prototype.duplicate = function () {
+    return this.concat(this)
+}
 
-const raffleArray = array => array.sort(() => Math.random() - 0.5)
+// eslint-disable-next-line
+Array.prototype.raffle = function () {
+    return this.sort(() => Math.random() - 0.5)
+}
 
-export { hasError, raffleArray, duplicateArray }
+export { hasError }

@@ -1,47 +1,26 @@
 import React from 'react'
-import Hero from '../Hero/Hero'
 import getHeroes from '../../services/hero'
-import { hasError, raffleArray, duplicateArray } from '../../utils/utils'
+import RenderList  from '../RenderList/RenderList'
+import RenderError from '../RenderError/RenderError'
+import { hasError } from '../../utils/utils'
 import './Main.css'
 
 class Main extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { heroes: [] }
+        this.state = { apiRet: [] }
     }
 
     componentDidMount () {
-        const heroesQuantity = 16
-
-        this.setHeroesToGame(heroesQuantity)
-            .then(heroesRet => this.setState({ heroes: heroesRet }))
+        this.setHeroesToGame().then(ret => this.setState({ apiRet: ret }))
     }
 
     async setHeroesToGame (heroesQuantity) {
-        const heroesReturned = await getHeroes(heroesQuantity)
-
-        const duplicatedHeroesArray = duplicateArray(heroesReturned)
-
-        const raffledHeroesArray = raffleArray(duplicatedHeroesArray)
-
-        return raffledHeroesArray
+        let ret = await getHeroes(heroesQuantity)
+        
+        return !hasError(ret) ? ret.duplicate().raffle() : ret;
     }
 
-    render() {
-        if (!hasError(this.state.heroes)) {
-            return (
-                <ul className="heroes" >{this.state.heroes.map(hero => 
-                    <Hero info={hero} />)}
-                </ul>
-            )
-        } else {
-            return (
-                <div className="error">
-                    <h1 className="error_message">{this.state.heroes.toString()}</h1>
-                </div>
-            )
-        }
-    }
+    render = () => !hasError(this.state.apiRet) ? <RenderList heroes={this.state.apiRet} className={'heroes'} /> : <RenderError message={this.state.apiRet} />
 }
-
 export default Main

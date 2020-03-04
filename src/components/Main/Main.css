@@ -17,37 +17,6 @@ ul {
     justify-content: center;
 }
 
-.hero {
-    margin: 5px;
-    cursor: pointer;
-    background-color: black;
-    border-radius: 5px;
-}
-
-.hero__image {
-    width: 150px;
-    height: 150px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    border-radius: 5px;
-}
-
-.hero:hover .hero__image {
-    opacity: .8;
-}
-
-.hero__name {
-    z-index: 1;
-    color: white;
-    left: 0;
-    bottom: 0;
-    background-color: #181818;
-    padding: 5px;
-    width: 100%;
-    font-family: 'Bebas Neue';
-}
-
 .error_message {
     color: white;
 }
