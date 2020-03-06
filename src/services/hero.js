@@ -7,18 +7,17 @@ const DEFAULT_HEROES_QUANTITY = 16
 //const PUBLIC_KEY = '30cb7eb871825d558abe440e5a02ff3269853ce0'
 
 const getHeroes = () => {
-    // return axios.get('https://gateway.marvel.com/v1/public/characters', {
-    //     params: {
-    //         apikey: PRIVATE_KEY,
-    //         orderBy: '-modified',
-    //         limit: DEFAULT_HEROES_QUANTITY
-    //     }
-    // }).then(ret => {
-    //     return ret.data.data.results
-    // }).catch((err) => {
-    //     return err;
-    // });
-    return []
+    return axios.get('https://gateway.marvel.com/v1/public/characters', {
+        params: {
+            apikey: PRIVATE_KEY,
+            orderBy: '-modified',
+            limit: DEFAULT_HEROES_QUANTITY
+        }
+    }).then(ret => {
+        return ret.data.data.results
+    }).catch((err) => {
+        return err;
+    });
 }
 
 export default getHeroes
