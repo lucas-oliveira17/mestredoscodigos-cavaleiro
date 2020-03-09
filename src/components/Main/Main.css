@@ -1,5 +1,5 @@
 body {
-    background-color: #e23636
+    background-color: #ee171f
 }
 
 li {
@@ -11,12 +11,27 @@ ul {
     padding: 0;
 }
 
+.logo__content {
+    width: 300px
+}
+
 .heroes {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin-bottom: 20px;
 }
 
 .error_message {
     color: white;
+}
+
+.top {
+    font-family: 'Bebas Neue';
+    color: white;
+    font-size: 42px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 20px 0px
 }
