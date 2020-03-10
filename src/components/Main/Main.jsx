@@ -1,5 +1,6 @@
 import React from 'react'
 import heroService from '../../services/hero'
+import Hero from '../../model/Hero'
 import RenderContent  from '../RenderContent/RenderContent'
 import RenderError from '../RenderError/RenderError'
 import { hasError } from '../../utils/utils'
@@ -18,8 +19,7 @@ class Main extends React.Component {
 
     async setHeroesToGame () {
         let ret = await heroService()
-        
-        return !hasError(ret) ? ret.duplicate().raffle() : ret;
+        return !hasError(ret) ? ret.map(hero => new Hero(hero.name, hero.id, `${hero.thumbnail.path}.${hero.thumbnail.extension}`)).duplicate().raffle() : ret;
     }
 
     render = () => !hasError(this.state.apiRet) ? <RenderContent heroes={this.state.apiRet} className={'heroes'} /> : <RenderError message={this.state.apiRet} />

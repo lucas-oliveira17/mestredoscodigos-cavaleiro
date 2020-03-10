@@ -2,8 +2,7 @@ import React from 'react'
 import './Hero.css'
 
 const Hero = props => {
-
-    const background = `url(${props.info.thumbnail.path}.${props.info.thumbnail.extension})
+    const background = `url(${props.info.image})
     no-repeat center center / cover`
 
     const backgroundFound = `red`

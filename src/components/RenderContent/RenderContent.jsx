@@ -51,6 +51,8 @@ class RenderContent extends React.Component {
         this.setState({ interval: setInterval(this.updateTimer.bind(this), 10) })
     }
 
+    clearHeroCompareState () { this.setState({ heroesToCompare: [] }) }
+
     saveHeroClicked (heroClickedName) {
         if (this.state.heroesToCompare.length <= 1) {
             this.setState({ heroesToCompare: [...this.state.heroesToCompare, heroClickedName] }, () => { this.doCompareActions() })
@@ -59,38 +61,43 @@ class RenderContent extends React.Component {
 
     compareNodes (clickedNode) {
         if (clickedNode.isSameNode(this.state.actualNode)) {
-            this.setState({ heroesToCompare: [] })
+            this.clearHeroCompareState()
             return true;
         }
-        
         this.setState({ actualNode: clickedNode })
         return false;
     }
 
     doCompareActions () {
-        if (this.state.heroesToCompare.length === 2) {
-            this.state.heroesToCompare[0] === this.state.heroesToCompare[1] ?
-                this.setState({ comparingFeedback: 'Herois Iguais!', 
-                                foundHeroes: [...this.state.foundHeroes, this.state.heroesToCompare[1]], 
-                                matches: this.state.matches + 1 })
-            :
-                this.setState({ comparingFeedback: 'Herois diferentes!'})
-            
-            this.setState({ heroesToCompare: [] })
+        const haveSufficientHeroesToCompare = this.state.heroesToCompare.length === 2
+
+        if (haveSufficientHeroesToCompare) {
+            this.checkHerosEquality()
+            this.clearHeroCompareState()
         }
     }
 
+    checkHerosEquality () {
+        this.state.heroesToCompare[0] === this.state.heroesToCompare[1] ? this.actionsWhenHeroesAreEqual() : this.actionsWhenHeroesAreDifferent()
+    }
+
+    actionsWhenHeroesAreEqual () {
+        const increaseMatches = this.state.matches + 1
+        const addHeroToFoundHeroes = [...this.state.foundHeroes, this.state.heroesToCompare[1]]
+
+        this.setState({ comparingFeedback: 'Herois Iguais!', foundHeroes: addHeroToFoundHeroes, matches: increaseMatches })
+    }
+
+    actionsWhenHeroesAreDifferent () {
+        this.setState({ comparingFeedback: 'Herois diferentes!'})
+    }
+
     subtractFoundHeroes (array) {
-        array.forEach(el => {
-            console.log(this.state.foundHeroes.includes(el.name))
-        })
-        
         array.forEach(el => !this.state.foundHeroes.includes(el.name) ? el.wasFound = true : el.wasFound = false)
         return array;
     }
 
     render() {
-
         return (
             <div>
                 <div className="top">
