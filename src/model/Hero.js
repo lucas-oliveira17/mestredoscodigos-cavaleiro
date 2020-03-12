@@ -1,7 +1,7 @@
 class Hero {
-    constructor(name, id, image) {
+    constructor(name, code, image) {
         this.name = name;
-        this.id = id;
+        this.code = code;
         this.image = image;
     }
 }

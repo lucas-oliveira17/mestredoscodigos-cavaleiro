@@ -2,14 +2,16 @@ const hasError = param => param instanceof Error
 
 const convertToSeconds = (hours, minutes, seconds) => `${hours}:${minutes}:${seconds}`.split(':').reduce((acc, time) => (60 * acc) + +time);
 
-// eslint-disable-next-line
-Array.prototype.duplicate = function () {
-    return this.concat(this)
+const raffle = array => array.sort(() => Math.random() - 0.5)
+
+function isEmpty(obj) {
+    for(var prop in obj) {
+      if(obj.hasOwnProperty(prop)) {
+        return false;
+      }
+    }
+  
+    return JSON.stringify(obj) === JSON.stringify({});
 }
 
-// eslint-disable-next-line
-Array.prototype.raffle = function () {
-    return this.sort(() => Math.random() - 0.5)
-}
-
-export { hasError, convertToSeconds }
+export { hasError, convertToSeconds, raffle, isEmpty }
