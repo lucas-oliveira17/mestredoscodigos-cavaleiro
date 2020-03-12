@@ -9,9 +9,6 @@ const Hero = props => {
 
     const backgroundFound = `url(${bgUrl}) no-repeat center center / contain`
 
-    console.log(props.info.wasFound)
-    console.log(props.info.wasClicked)
-
     return props.info.wasFound || props.info.wasClicked ? backgroundOpened(background, props) : backgroundHide(backgroundFound, props)
 }
 

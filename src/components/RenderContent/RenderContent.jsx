@@ -7,15 +7,55 @@ class RenderContent extends React.Component {
         super(props)
 
         this.state = {
-            compareQuantity: 1, 
+            compareQuantity: 1,
             heroToCompare: '',
             comparingFeedback: '',
             foundHeroes: [],
-            clickedHero: 0,
+            clickedHeroes: [],
             matches: 0,
             actualNode: document.createElement('div'),
             stopwatchStarted: false
         }
+    }
+
+    startHeroActions = clickedNode => {
+        const heroName = clickedNode.getAttribute("name")
+        const heroCode = clickedNode.getAttribute("rel")
+
+        if (!clickedNode.isSameNode(this.state.actualNode) || this.state.actualNode.isSameNode(document.createElement('div'))) {
+            this.setState({ clickedHeroes: [...this.state.clickedHeroes, heroCode] })
+            this.compareHeros(heroName)
+        }
+
+        
+        this.setState({ clickedHeroes: [...this.state.clickedHeroes, heroCode], heroToCompare: heroName, actualNode: clickedNode })
+        this.clearHeroCompare()
+    }
+
+    compareHeros (heroName) { heroName === this.state.heroToCompare ? this.equalHeroActions(heroName) : this.differentHeroActions(heroName) }
+
+    clearHeroCompare () {
+        const isPair = this.state.compareQuantity % 2 === 0
+        
+        if (isPair) {
+            this.setState({ heroToCompare: '' })
+
+            const self = this;
+
+            setTimeout(function(){ self.setState({ clickedHeroes: [] }) }, 1000);
+        }
+
+        this.setState({ compareQuantity: this.state.compareQuantity + 1 })
+    }
+
+    differentHeroActions () {
+        this.setState({ comparingFeedback: false})
+    }
+
+    equalHeroActions (heroName) {
+        const increaseMatches = this.state.matches + 1
+        const addHeroToFoundHeroes = [...this.state.foundHeroes, heroName]
+        this.setState({foundHeroes: addHeroToFoundHeroes, matches: increaseMatches })
     }
 
     startStopwatch () {
@@ -26,52 +66,10 @@ class RenderContent extends React.Component {
         this.setState({ stopwatchStarted: false })
     }
 
-    startHeroActions = clickedNode => {
-        const heroName = clickedNode.getAttribute("name")
-        const heroCode = clickedNode.getAttribute("rel")
-
-        console.log(heroCode)
-
-        if (!clickedNode.isSameNode(this.state.actualNode) || this.state.actualNode.isSameNode(document.createElement('div'))) {
-            this.compareHeros(heroName)
-        }
-
-        this.setState({ clickedHero: heroCode, heroToCompare: heroName, actualNode: clickedNode })
-        this.clearHeroCompare()
-    }
-
-    compareHeros (heroName) {
-        if (heroName === this.state.heroToCompare) {
-            this.equalHeroActions(heroName)
-        } else {
-            this.differentHeroActions(heroName)
-        }
-    }
-
-    differentHeroActions () {
-        this.setState({ comparingFeedback: 'Herois diferentes!'})
-    }
-
-    equalHeroActions (heroName) {
-        const increaseMatches = this.state.matches + 1
-        const addHeroToFoundHeroes = [...this.state.foundHeroes, heroName]
-        this.setState({ comparingFeedback: 'Herois Iguais!', foundHeroes: addHeroToFoundHeroes, matches: increaseMatches })
-    }
-
-    clearHeroCompare () {
-        const isOdd = this.state.compareQuantity % 2 === 0
-        
-        if (isOdd) {
-            this.setState({ heroToCompare: '' })
-        }
-
-        this.setState({ compareQuantity: this.state.compareQuantity + 1})
-    }
-
     subtractFoundHeroes (array) {
         array.forEach(el => {
             this.state.foundHeroes.includes(el.name) ? el.wasFound = true : el.wasFound = false
-            el.code.toString() === this.state.clickedHero.toString() ? el.wasClicked = true : el.wasClicked = false
+            // this.state.clickedHeroes.includes(el.code.toString()) ? el.wasClicked = true : el.wasClicked = false
         })
         return array;
     }
@@ -89,7 +87,7 @@ class RenderContent extends React.Component {
                     </div>
                 </div>
                 <RenderList className={this.props.className} startHeroActions={this.startHeroActions.bind(this)}
-                    heroes={this.subtractFoundHeroes(this.props.heroes)} startStopwatch={this.startStopwatch.bind(this)}/>
+                    clickedHeroes={this.state.clickedHeroes} heroes={this.subtractFoundHeroes(this.props.heroes)} startStopwatch={this.startStopwatch.bind(this)}/>
             </div>
         )
     }
