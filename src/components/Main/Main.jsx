@@ -21,7 +21,7 @@ class Main extends React.Component {
     duplicateHeroesList(heroesList) {
         let newArray = []
     
-        heroesList.forEach(el => newArray.push(new Hero(el.name, el.code + 1000, el.image)))
+        heroesList.forEach(el => newArray.push(new Hero(el.name, el.code + 1000, el.image, el.description)))
     
         return [...heroesList, ...newArray]
     }
@@ -29,7 +29,7 @@ class Main extends React.Component {
     async setHeroesToGame () {
         let ret = await heroService()
 
-        const heroesList = ret.map(hero => new Hero(hero.name, hero.id, `${hero.thumbnail.path}.${hero.thumbnail.extension}`))
+        const heroesList = ret.map(hero => new Hero(hero.name, hero.id, `${hero.thumbnail.path}.${hero.thumbnail.extension}`, hero.description))
         
         const heroesListDuplicated = this.duplicateHeroesList(heroesList);
         

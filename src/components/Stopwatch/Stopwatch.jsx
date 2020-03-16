@@ -14,7 +14,7 @@ class Stopwatch extends React.Component {
     }
 
     shouldComponentUpdate(nextProps, nextState){
-        if (this.props.stopwatchStarted !== nextProps.stopwatchStarted) {
+        if (this.props.stopwatchRunning !== nextProps.stopwatchRunning) {
             return true
         }
 

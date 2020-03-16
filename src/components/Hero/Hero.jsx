@@ -16,7 +16,7 @@ const handleClickHero = (e, props) => {
 
     const clickedNode = e.target
 
-    props.startStopwatch();
+    props.runStopwatch(true);
 
     props.startHeroActions(clickedNode)
 }
@@ -25,7 +25,8 @@ const backgroundHide = (style, props) => (
     <React.Fragment>
         <li className="hero" onClick={e => handleClickHero(e, props)} key={props.info.code}>
             <div className="hero__clickable" rel={props.info.code} name={props.info.name}></div>
-            <div className="hero__image" alt="" style={ { background: style } }>
+                <div className="hero__image" alt="" style={ { background: style } }>
+                <span className="hero__name">{props.info.name}</span>
             </div>
         </li>
     </React.Fragment>

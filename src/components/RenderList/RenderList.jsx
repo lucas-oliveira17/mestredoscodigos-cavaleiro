@@ -33,7 +33,7 @@ class RenderList extends React.Component {
 
     render = () => (<ul className={this.props.className}> {this.props.heroes.map(hero => 
         <Hero key={hero.code} startHeroActions={this.props.startHeroActions} compareNodes={this.props.compareNodes} 
-            saveHeroClicked={this.props.saveHeroClicked} startStopwatch={this.props.startStopwatch} info={hero} />)}</ul>)
+            saveHeroClicked={this.props.saveHeroClicked} runStopwatch={this.props.runStopwatch} info={hero} />)}</ul>)
 }
 
 export default RenderList
